@@ -8,6 +8,8 @@ import ProfilePage from './pages/Dashboard/ProfilePage';
 import ResumePage from './pages/Dashboard/ResumePage';
 import SkillsPage from './pages/Dashboard/SkillsPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
+import HistoryPage from './pages/Dashboard/HistoryPage';
+import ChatPage from './pages/Dashboard/ChatPage';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +27,8 @@ const App: React.FC = () => {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/resumes" element={<ResumePage />} />
             <Route path="/skills" element={<SkillsPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/chat" element={<ChatPage />} />
             {/* Add more protected routes here later */}
           </Route>
           
