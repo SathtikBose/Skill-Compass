@@ -27,6 +27,24 @@ class ResumeController {
   }
 
   /**
+   * Extract Skills from Resume
+   * @route POST /api/v1/resumes/:id/extract
+   */
+  static async extractSkills(req, res, next) {
+    try {
+      const resume = await ResumeService.extractSkills(req.user.id, req.params.id);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Skills extracted successfully',
+        data: { resume },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
    * Get User Resumes
    * @route GET /api/v1/resumes
    */

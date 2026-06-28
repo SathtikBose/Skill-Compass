@@ -15,6 +15,8 @@ interface Resume {
 const ResumePage: React.FC = () => {
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isExtracting, setIsExtracting] = useState<string | null>(null);
+  const [message, setMessage] = useState({ text: '', type: '' });
 
   const fetchResumes = async () => {
     try {
@@ -40,6 +42,24 @@ const ResumePage: React.FC = () => {
     } catch (error) {
       console.error('Failed to delete resume', error);
       alert('Failed to delete resume.');
+    }
+  };
+
+  const handleExtract = async (id: string) => {
+    setIsExtracting(id);
+    setMessage({ text: '', type: '' });
+    try {
+      await api.post(`/resumes/${id}/extract`);
+      setMessage({ text: 'Skills extracted successfully!', type: 'success' });
+      await fetchResumes(); // refresh to show 'parsed' status
+    } catch (error: any) {
+      console.error('Failed to extract skills', error);
+      setMessage({ 
+        text: error.response?.data?.message || 'Failed to extract skills.', 
+        type: 'error' 
+      });
+    } finally {
+      setIsExtracting(null);
     }
   };
 
@@ -82,6 +102,16 @@ const ResumePage: React.FC = () => {
           <div className="lg:col-span-2 space-y-4">
             <h2 className="text-xl font-semibold text-white mb-4">Your Resumes</h2>
             
+            {message.text && (
+              <div className={`p-4 rounded-xl text-sm font-medium border mb-4 ${
+                message.type === 'error' 
+                  ? 'bg-red-500/10 border-red-500/50 text-red-400' 
+                  : 'bg-green-500/10 border-green-500/50 text-green-400'
+              }`}>
+                {message.text}
+              </div>
+            )}
+
             {isLoading ? (
               <div className="flex justify-center p-12">
                 <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
@@ -120,6 +150,21 @@ const ResumePage: React.FC = () => {
                     
                     <div className="flex items-center space-x-4">
                       {getStatusBadge(resume.status)}
+                      
+                      {resume.status === 'pending' && (
+                        <button
+                          onClick={() => handleExtract(resume._id)}
+                          disabled={isExtracting === resume._id}
+                          className="px-3 py-1.5 bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600/30 rounded-lg text-xs font-medium transition-colors flex items-center"
+                        >
+                          {isExtracting === resume._id ? (
+                            <><Loader2 className="w-3 h-3 mr-1 animate-spin" /> Extracting...</>
+                          ) : (
+                            'Extract Skills'
+                          )}
+                        </button>
+                      )}
+
                       <button 
                         onClick={() => handleDelete(resume._id)}
                         className="p-2 text-neutral-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
