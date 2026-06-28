@@ -4,11 +4,13 @@ import { AuthProvider } from './context/AuthContext';
 import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
+import ProfilePage from './pages/Dashboard/ProfilePage';
 
 // Dummy Dashboard for now
 const Dashboard = () => (
-  <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">
+  <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center flex-col gap-4">
     <h1 className="text-3xl font-bold">Dashboard (Protected)</h1>
+    <a href="/profile" className="text-indigo-400 hover:underline">Go to Profile</a>
   </div>
 );
 
@@ -25,6 +27,7 @@ const App: React.FC = () => {
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<ProfilePage />} />
             {/* Add more protected routes here later */}
           </Route>
           

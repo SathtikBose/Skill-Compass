@@ -19,6 +19,27 @@ const userSchema = new mongoose.Schema({
     // Required unless signing up with Google
     required: function() { return this.provider === 'local'; },
   },
+  jobTitle: {
+    type: String,
+    default: '',
+    trim: true,
+  },
+  bio: {
+    type: String,
+    default: '',
+    trim: true,
+    maxlength: 500,
+  },
+  linkedIn: {
+    type: String,
+    default: '',
+    trim: true,
+  },
+  github: {
+    type: String,
+    default: '',
+    trim: true,
+  },
   provider: {
     type: String,
     enum: ['local', 'google'],
