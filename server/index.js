@@ -8,6 +8,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const resumeRoutes = require('./routes/resume.routes');
+const skillRoutes = require('./routes/skill.routes');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(morgan('dev'));
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/resumes', resumeRoutes);
+app.use('/api/v1/skills', skillRoutes);
 
 app.get('/api/v1/health', (req, res) => {
   res.status(200).json({
