@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/user.controller');
 const { protect } = require('../middleware/auth.middleware');
-const upload = require('../middleware/upload.middleware');
+const { upload } = require('../middleware/upload.middleware');
 
 // All user routes require authentication
 router.use(protect);

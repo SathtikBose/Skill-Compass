@@ -46,8 +46,36 @@ const deleteFromCloudinary = async (publicId) => {
   }
 };
 
+/**
+ * Uploads a raw file stream (like PDF) to Cloudinary
+ * @param {Buffer} fileBuffer
+ * @param {String} folder
+ * @returns {Promise<Object>}
+ */
+const uploadRawToCloudinary = (fileBuffer, folder = 'skillcompass/resumes') => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        resource_type: 'raw', // For PDFs
+      },
+      (error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+
+    streamifier.createReadStream(fileBuffer).pipe(uploadStream);
+  });
+};
+
 module.exports = {
   cloudinary,
   uploadToCloudinary,
+  uploadRawToCloudinary,
   deleteFromCloudinary,
 };
+
