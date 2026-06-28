@@ -45,6 +45,58 @@ class GeminiService {
       throw new Error('Failed to extract skills from resume');
     }
   }
+
+  /**
+   * Generates a skill analysis report
+   * @param {string} targetRole 
+   * @param {Array} currentSkills 
+   * @returns {Promise<Object>} Analysis JSON object
+   */
+  async generateAnalysis(targetRole, currentSkills) {
+    if (!process.env.GEMINI_API_KEY) {
+      console.warn('GEMINI_API_KEY is not set. Returning mock analysis data.');
+      return {
+        score: 75,
+        decayScore: 20,
+        driftScore: 10,
+        missingSkills: ['TypeScript', 'GraphQL'],
+        recommendations: [
+          {
+            title: 'Learn TypeScript',
+            description: 'Essential for modern frontend development.',
+            difficulty: 'Intermediate',
+            estimatedTime: '3 weeks',
+            resources: ['Official Docs', 'FrontendMasters']
+          }
+        ],
+        evidence: [
+          {
+            source: 'Market Trend 2024',
+            jobTitle: targetRole || 'Software Engineer',
+            company: 'Industry Standard',
+            matchingSentence: 'TypeScript is required in 80% of new roles.',
+            date: new Date().toISOString(),
+            confidence: 90
+          }
+        ]
+      };
+    }
+
+    try {
+      const skillsText = JSON.stringify(currentSkills, null, 2);
+      const fullPrompt = \`\${require('./prompts/analysis.prompt').ANALYSIS_PROMPT}\n\nTARGET ROLE:\n\${targetRole || 'Software Engineer'}\n\nCURRENT SKILLS:\n\${skillsText}\`;
+      
+      const result = await this.model.generateContent(fullPrompt);
+      const response = await result.response;
+      let text = response.text();
+      
+      text = text.replace(/\`\`\`json/g, '').replace(/\`\`\`/g, '').trim();
+      return JSON.parse(text);
+    } catch (error) {
+      console.error('Gemini API Error (Analysis):', error);
+      throw new Error('Failed to generate analysis');
+    }
+  }
 }
 
 module.exports = new GeminiService();
