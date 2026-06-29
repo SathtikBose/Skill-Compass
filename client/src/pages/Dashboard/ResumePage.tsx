@@ -71,24 +71,25 @@ const ResumePage: React.FC = () => {
   const getStatusBadge = (status: string) => {
     switch(status) {
       case 'parsed':
-        return <span className="flex items-center text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-md"><CheckCircle2 className="w-3 h-3 mr-1"/> Parsed</span>;
+        return <span className="flex items-center text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-md border border-green-400/20"><CheckCircle2 className="w-3 h-3 mr-1"/> Parsed</span>;
       case 'pending':
-        return <span className="flex items-center text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-1 rounded-md"><Clock className="w-3 h-3 mr-1"/> Pending</span>;
+        return <span className="flex items-center text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-1 rounded-md border border-amber-400/20"><Clock className="w-3 h-3 mr-1"/> Pending</span>;
       case 'failed':
-        return <span className="flex items-center text-xs font-medium text-red-400 bg-red-400/10 px-2 py-1 rounded-md"><AlertTriangle className="w-3 h-3 mr-1"/> Failed</span>;
+        return <span className="flex items-center text-xs font-medium text-red-400 bg-red-400/10 px-2 py-1 rounded-md border border-red-400/20"><AlertTriangle className="w-3 h-3 mr-1"/> Failed</span>;
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12 lg:p-24">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-screen text-white p-6 md:p-12 lg:p-24 relative overflow-x-hidden">
+      <div className="gradient-bg"></div>
+      <div className="max-w-5xl mx-auto space-y-8 relative z-10">
         <div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300 animate-gradient">
             Resume Management
           </h1>
-          <p className="text-neutral-400 mt-2">Upload your latest resume for AI analysis and skill extraction.</p>
+          <p className="text-gray-400 mt-2 text-lg">Upload your latest resume for AI analysis and skill extraction.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -100,13 +101,16 @@ const ResumePage: React.FC = () => {
 
           {/* Resumes List Section */}
           <div className="lg:col-span-2 space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4">Your Resumes</h2>
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+              <div className="w-2 h-6 bg-purple-500 rounded-full mr-3 shadow-[0_0_10px_rgba(168,85,247,0.8)]"></div>
+              Your Resumes
+            </h2>
             
             {message.text && (
-              <div className={`p-4 rounded-xl text-sm font-medium border mb-4 ${
+              <div className={`p-4 rounded-xl text-sm font-medium border mb-4 backdrop-blur-md ${
                 message.type === 'error' 
-                  ? 'bg-red-500/10 border-red-500/50 text-red-400' 
-                  : 'bg-green-500/10 border-green-500/50 text-green-400'
+                  ? 'bg-red-500/10 border-red-500/50 text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.2)]' 
+                  : 'bg-green-500/10 border-green-500/50 text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]'
               }`}>
                 {message.text}
               </div>
@@ -114,10 +118,10 @@ const ResumePage: React.FC = () => {
 
             {isLoading ? (
               <div className="flex justify-center p-12">
-                <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+                <Loader2 className="w-10 h-10 animate-spin text-indigo-500" />
               </div>
             ) : resumes.length === 0 ? (
-              <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 text-center text-neutral-400">
+              <div className="glass-card rounded-2xl p-8 text-center text-gray-400 border-t border-l border-white/10">
                 You haven't uploaded any resumes yet.
               </div>
             ) : (
@@ -128,34 +132,34 @@ const ResumePage: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     key={resume._id} 
-                    className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-xl p-5 flex items-center justify-between group hover:border-indigo-500/50 transition-colors"
+                    className="glass-card border-t border-l border-white/10 rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between group hover:border-indigo-400/50 transition-colors gap-4 sm:gap-0"
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="bg-red-500/20 p-3 rounded-xl text-red-400">
+                      <div className="bg-gradient-to-br from-red-500/20 to-purple-500/20 p-3 rounded-xl text-red-400 border border-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.1)]">
                         <FileText size={24} />
                       </div>
                       <div>
-                        <h3 className="font-medium text-white truncate max-w-[200px] md:max-w-xs" title={resume.originalName}>
+                        <h3 className="font-medium text-white truncate max-w-[200px] md:max-w-xs text-lg" title={resume.originalName}>
                           {resume.originalName}
                         </h3>
-                        <div className="flex items-center text-xs text-neutral-400 mt-1 space-x-4">
+                        <div className="flex items-center text-xs text-gray-400 mt-1 space-x-4 font-mono">
                           <span className="flex items-center">
-                            <Calendar className="w-3 h-3 mr-1" />
+                            <Calendar className="w-3 h-3 mr-1 text-indigo-400" />
                             {formatDate(resume.createdAt)}
                           </span>
-                          <span>{(resume.fileSize / 1024 / 1024).toFixed(2)} MB</span>
+                          <span className="text-purple-400/80">{(resume.fileSize / 1024 / 1024).toFixed(2)} MB</span>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-3 w-full sm:w-auto justify-end">
                       {getStatusBadge(resume.status)}
                       
                       {resume.status === 'pending' && (
                         <button
                           onClick={() => handleExtract(resume._id)}
                           disabled={isExtracting === resume._id}
-                          className="px-3 py-1.5 bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600/30 rounded-lg text-xs font-medium transition-colors flex items-center"
+                          className="px-3 py-1.5 btn-gradient text-white rounded-lg text-xs font-medium transition-colors flex items-center shadow-[0_0_10px_rgba(129,140,248,0.3)] disabled:opacity-50"
                         >
                           {isExtracting === resume._id ? (
                             <><Loader2 className="w-3 h-3 mr-1 animate-spin" /> Extracting...</>
@@ -167,7 +171,7 @@ const ResumePage: React.FC = () => {
 
                       <button 
                         onClick={() => handleDelete(resume._id)}
-                        className="p-2 text-neutral-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                        className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20 border border-transparent rounded-lg transition-all opacity-100 sm:opacity-0 group-hover:opacity-100 focus:opacity-100"
                         title="Delete Resume"
                       >
                         <Trash2 size={18} />
@@ -186,3 +190,4 @@ const ResumePage: React.FC = () => {
 };
 
 export default ResumePage;
+

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
-import { User, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
+import { User, Lock, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const RegisterPage: React.FC = () => {
@@ -31,20 +31,20 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 relative overflow-hidden p-4">
-      {/* Background blobs for glassmorphism effect */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
-
+    <div className="min-h-screen flex items-center justify-center bg-[#020617] relative overflow-hidden font-body text-slate-50 p-4">
+      <div className="gradient-bg"></div>
+      
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative z-10 w-full max-w-md p-8 bg-neutral-900/50 backdrop-blur-xl border border-neutral-800/50 rounded-2xl shadow-2xl"
+        className="glass-card w-full max-w-md rounded-3xl p-8 md:p-10 relative overflow-hidden z-10"
       >
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
-          <p className="text-neutral-400">Join Skill Compass to boost your career</p>
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#818cf8]/30 to-transparent"></div>
+        
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold font-headline mb-2 text-white">Create Account</h1>
+          <p className="text-slate-400 font-label text-sm">Join Skill Compass to boost your career</p>
         </div>
 
         {error && (
@@ -53,80 +53,89 @@ const RegisterPage: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-300">Full Name</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500">
-                <User size={18} />
-              </div>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full pl-10 pr-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                placeholder="John Doe"
-              />
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative floating-label-input">
+            <input 
+              id="name" 
+              name="name" 
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required 
+              placeholder=" "
+              className="block w-full px-4 py-4 bg-[#0f172a]/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-[#818cf8]/50 focus:border-[#818cf8] outline-none transition-all text-white placeholder-transparent"
+            />
+            <label 
+              htmlFor="name"
+              className="absolute left-4 top-4 text-slate-400 pointer-events-none transition-all duration-200 origin-left"
+            >
+              Full Name
+            </label>
+            <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#818cf8] transition-colors pointer-events-none">
+              <User size={18} />
+            </button>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-300">Email Address</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500">
-                <Mail size={18} />
-              </div>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full pl-10 pr-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                placeholder="you@example.com"
-              />
-            </div>
+          <div className="relative floating-label-input">
+            <input 
+              id="email" 
+              name="email" 
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+              placeholder=" "
+              className="block w-full px-4 py-4 bg-[#0f172a]/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-[#818cf8]/50 focus:border-[#818cf8] outline-none transition-all text-white placeholder-transparent"
+            />
+            <label 
+              htmlFor="email"
+              className="absolute left-4 top-4 text-slate-400 pointer-events-none transition-all duration-200 origin-left"
+            >
+              Email Address
+            </label>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-300">Password</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500">
-                <Lock size={18} />
-              </div>
-              <input
+          <div className="space-y-1">
+            <div className="relative floating-label-input">
+              <input 
+                id="password" 
+                name="password" 
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
+                required 
                 minLength={8}
-                className="w-full pl-10 pr-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                placeholder="••••••••"
+                placeholder=" "
+                className="block w-full px-4 py-4 bg-[#0f172a]/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-[#818cf8]/50 focus:border-[#818cf8] outline-none transition-all text-white placeholder-transparent"
               />
+              <label 
+                htmlFor="password"
+                className="absolute left-4 top-4 text-slate-400 pointer-events-none transition-all duration-200 origin-left"
+              >
+                Password
+              </label>
+              <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#818cf8] transition-colors">
+                <Lock size={18} />
+              </button>
             </div>
           </div>
 
-          <button
-            type="submit"
+          <button 
+            type="submit" 
             disabled={isLoading}
-            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed group mt-2"
+            className="btn-gradient w-full py-4 rounded-xl text-white font-bold text-lg cursor-pointer active:scale-95 transition-transform flex justify-center items-center mt-2"
           >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                Create Account
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </>
-            )}
+            {isLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Sign Up'}
           </button>
         </form>
 
-        <div className="mt-8 text-center text-sm text-neutral-400">
-          Already have an account?{' '}
-          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-            Sign in instead
-          </Link>
+        <div className="mt-10 text-center">
+          <p className="text-slate-400 text-sm font-label">
+            Already have an account? 
+            <Link to="/login" className="text-[#818cf8] hover:text-[#a855f7] font-bold transition-all ml-1">
+              Sign in instead
+            </Link>
+          </p>
         </div>
       </motion.div>
     </div>

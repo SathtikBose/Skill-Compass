@@ -26,27 +26,30 @@ const SkillsPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-950">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+      <div className="min-h-screen flex items-center justify-center relative">
+        <div className="gradient-bg"></div>
+        <Loader2 className="w-10 h-10 animate-spin text-indigo-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12 lg:p-24">
+    <div className="min-h-screen text-white p-6 md:p-12 lg:p-24 relative overflow-x-hidden">
+      <div className="gradient-bg"></div>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-5xl mx-auto space-y-8"
+        className="max-w-5xl mx-auto space-y-8 relative z-10"
       >
         <div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300 animate-gradient">
             Skills Profile
           </h1>
-          <p className="text-neutral-400 mt-2">Manage your tech stack, tools, and expertise.</p>
+          <p className="text-gray-400 mt-2 text-lg">Manage your tech stack, tools, and expertise.</p>
         </div>
 
-        <div className="bg-neutral-900/40 backdrop-blur-xl border border-neutral-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <div className="glass-card rounded-2xl p-6 md:p-8 border-t border-l border-white/10 relative overflow-hidden">
+          <div className="absolute -top-32 -right-32 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
           <SkillManager skills={skills} onSkillsChange={fetchSkills} />
         </div>
         

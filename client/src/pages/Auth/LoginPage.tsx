@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
-import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
+import { Lock, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const LoginPage: React.FC = () => {
@@ -30,20 +30,20 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 relative overflow-hidden">
-      {/* Background blobs for glassmorphism effect */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
-
+    <div className="min-h-screen flex items-center justify-center bg-[#020617] relative overflow-hidden font-body text-slate-50">
+      <div className="gradient-bg"></div>
+      
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative z-10 w-full max-w-md p-8 bg-neutral-900/50 backdrop-blur-xl border border-neutral-800/50 rounded-2xl shadow-2xl"
+        className="glass-card w-full max-w-md rounded-3xl p-8 md:p-10 relative overflow-hidden z-10"
       >
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-neutral-400">Sign in to continue your journey</p>
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#818cf8]/30 to-transparent"></div>
+        
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold font-headline mb-2 text-white">Welcome Back</h1>
+          <p className="text-slate-400 font-label text-sm">Continue your journey to mastery</p>
         </div>
 
         {error && (
@@ -53,66 +53,87 @@ const LoginPage: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-neutral-300">Email Address</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500">
-                <Mail size={18} />
-              </div>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full pl-10 pr-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                placeholder="you@example.com"
-              />
-            </div>
+          <div className="relative floating-label-input">
+            <input 
+              id="email" 
+              name="email" 
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+              placeholder=" "
+              className="block w-full px-4 py-4 bg-[#0f172a]/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-[#818cf8]/50 focus:border-[#818cf8] outline-none transition-all text-white placeholder-transparent"
+            />
+            <label 
+              htmlFor="email"
+              className="absolute left-4 top-4 text-slate-400 pointer-events-none transition-all duration-200 origin-left"
+            >
+              Email Address
+            </label>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-neutral-300">Password</label>
-              <Link to="/forgot-password" className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
-                Forgot password?
-              </Link>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500">
-                <Lock size={18} />
-              </div>
-              <input
+          <div className="space-y-1">
+            <div className="relative floating-label-input">
+              <input 
+                id="password" 
+                name="password" 
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full pl-10 pr-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                placeholder="••••••••"
+                required 
+                placeholder=" "
+                className="block w-full px-4 py-4 bg-[#0f172a]/40 border border-white/10 rounded-xl focus:ring-2 focus:ring-[#818cf8]/50 focus:border-[#818cf8] outline-none transition-all text-white placeholder-transparent"
               />
+              <label 
+                htmlFor="password"
+                className="absolute left-4 top-4 text-slate-400 pointer-events-none transition-all duration-200 origin-left"
+              >
+                Password
+              </label>
+              <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#818cf8] transition-colors">
+                <Lock size={18} />
+              </button>
+            </div>
+            <div className="flex justify-end pt-2">
+              <Link to="/forgot-password" className="text-xs text-[#818cf8] hover:text-[#a855f7] transition-colors font-medium">
+                Forgot Password?
+              </Link>
             </div>
           </div>
 
-          <button
-            type="submit"
+          <button 
+            type="submit" 
             disabled={isLoading}
-            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+            className="btn-gradient w-full py-4 rounded-xl text-white font-bold text-lg cursor-pointer active:scale-95 transition-transform flex justify-center items-center"
           >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                Sign In
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </>
-            )}
+            {isLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Sign In'}
           </button>
+
+          <div className="relative flex items-center py-4">
+            <div className="flex-grow border-t border-white/10"></div>
+            <span className="flex-shrink mx-4 text-xs uppercase tracking-widest text-slate-400 font-bold">OR</span>
+            <div className="flex-grow border-t border-white/10"></div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button type="button" className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-sm font-medium">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJmXzky8kZvnONzQJiRkgxabr-ZS8P1ZHXKbV87j33u4fdRmgTJ5fRfLa0YAEfiQW0cI6dLMc0jN-jgO2VZlF1H2qT2E9hpL9Q6ocdWqApdeRCQ-A0rY4HPbYrLgGMCQRIDqTRVcWKQcL0uuWG7pN1h3_InH0--CNxNVZPlXRxxHC5lijl5fWE8msNYKMm7PZUNBGpxlox8UeRRTPavh8TcwDZ2daPyErBcBdrh4B4svgpG7B3fbDiBNk_Y3UtcbAVd7P9HCx4yECN" alt="Google" className="w-5 h-5" />
+              Google
+            </button>
+            <button type="button" className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-sm font-medium">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsD8ewDqXkngbTkiQ8qH92ibvWXXB3hBXWIOMqiAUK0Hrv_g2lYPMimXIzgj0o_I8udpyzU3CRbt1Pq95InZ8eYb-mHn1hmxIAoCHrzhcuwJcDSnOq9aZ-4BqKNP5X97_WljdtKsVIcbEH7fAXBqmSjytZtyuInn6S-uRcMh2oVg0nN2bkuz0ej1Bsk3nln_L7QaLHyP4vACWXJ_j_2T_GwFOEy040b3aw3QrRLhGOfUgo9-fylBdFeIzXWnwbwgrzgKyZtxYqno0m" alt="Apple" className="w-5 h-5" />
+              Apple
+            </button>
+          </div>
         </form>
 
-        <div className="mt-8 text-center text-sm text-neutral-400">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-            Create an account
-          </Link>
+        <div className="mt-10 text-center">
+          <p className="text-slate-400 text-sm font-label">
+            Don't have an account? 
+            <Link to="/register" className="text-[#818cf8] hover:text-[#a855f7] font-bold transition-all ml-1">
+              Create an account
+            </Link>
+          </p>
         </div>
       </motion.div>
     </div>
