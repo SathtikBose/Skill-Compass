@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { Loader2, Activity, Target, AlertTriangle, Lightbulb, Play, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
-import StatCard from '../../components/dashboard/StatCard';
 import SkillsChart from '../../components/dashboard/SkillsChart';
 
 const DashboardPage: React.FC = () => {
