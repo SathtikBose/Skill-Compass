@@ -1,7 +1,7 @@
 const Resume = require('../models/Resume');
 const { uploadRawToCloudinary, deleteFromCloudinary } = require('../utils/cloudinary');
 const axios = require('axios');
-const pdfParse = require('pdf-parse');
+const { PDFParse } = require('pdf-parse');
 const geminiService = require('../ai/gemini.service');
 const SkillService = require('./skill.service');
 
@@ -51,7 +51,9 @@ class ResumeService {
       const pdfBuffer = Buffer.from(response.data);
 
       // 2. Parse PDF text
-      const pdfData = await pdfParse(pdfBuffer);
+      const parser = new PDFParse({ data: pdfBuffer });
+      const pdfData = await parser.getText();
+      await parser.destroy();
       const text = pdfData.text;
 
       if (!text || text.trim().length === 0) {
