@@ -1,5 +1,5 @@
 const Report = require('../models/Report');
-const Profile = require('../models/Profile');
+const User = require('../models/User');
 const SkillService = require('./skill.service');
 const geminiService = require('../ai/gemini.service');
 
@@ -8,8 +8,8 @@ class ReportService {
    * Generate a new Analysis Report
    */
   static async generateReport(userId) {
-    const profile = await Profile.findOne({ user: userId });
-    const targetRole = profile?.targetRole || 'Software Engineer';
+    const user = await User.findById(userId);
+    const targetRole = user?.jobTitle || 'Software Engineer';
     
     const skillDoc = await SkillService.getUserSkills(userId);
     const currentSkills = skillDoc.skills;

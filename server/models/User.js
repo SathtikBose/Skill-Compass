@@ -62,18 +62,13 @@ const userSchema = new mongoose.Schema({
 });
 
 // Pre-save hook to hash password
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
   if (!this.isModified('password') || !this.password) {
-    return next();
+    return;
   }
   
-  try {
-    const salt = await bcrypt.genSalt(12); // TRD requires minimum 12 rounds
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
+  const salt = await bcrypt.genSalt(12); // TRD requires minimum 12 rounds
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Method to compare passwords

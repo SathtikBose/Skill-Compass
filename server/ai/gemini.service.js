@@ -25,13 +25,13 @@ class GeminiService {
     }
 
     try {
-      const fullPrompt = \`\${RESUME_PARSING_PROMPT}\n\nRESUME TEXT:\n\${resumeText}\`;
+      const fullPrompt = `${RESUME_PARSING_PROMPT}\n\nRESUME TEXT:\n${resumeText}`;
       const result = await this.model.generateContent(fullPrompt);
       const response = await result.response;
       let text = response.text();
       
       // Clean up potential markdown formatting from the response
-      text = text.replace(/\`\`\`json/g, '').replace(/\`\`\`/g, '').trim();
+      text = text.replace(/```json/g, '').replace(/```/g, '').trim();
       
       const skills = JSON.parse(text);
       
@@ -84,13 +84,13 @@ class GeminiService {
 
     try {
       const skillsText = JSON.stringify(currentSkills, null, 2);
-      const fullPrompt = \`\${require('./prompts/analysis.prompt').ANALYSIS_PROMPT}\n\nTARGET ROLE:\n\${targetRole || 'Software Engineer'}\n\nCURRENT SKILLS:\n\${skillsText}\`;
+      const fullPrompt = `${require('./prompts/analysis.prompt').ANALYSIS_PROMPT}\n\nTARGET ROLE:\n${targetRole || 'Software Engineer'}\n\nCURRENT SKILLS:\n${skillsText}`;
       
       const result = await this.model.generateContent(fullPrompt);
       const response = await result.response;
       let text = response.text();
       
-      text = text.replace(/\`\`\`json/g, '').replace(/\`\`\`/g, '').trim();
+      text = text.replace(/```json/g, '').replace(/```/g, '').trim();
       return JSON.parse(text);
     } catch (error) {
       console.error('Gemini API Error (Analysis):', error);

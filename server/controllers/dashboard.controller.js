@@ -1,4 +1,4 @@
-const Profile = require('../models/Profile');
+const User = require('../models/User');
 const SkillService = require('../services/skill.service');
 const ReportService = require('../services/report.service');
 
@@ -11,17 +11,22 @@ class DashboardController {
     try {
       const userId = req.user.id;
 
-      // Fetch Profile, Skills, and Latest Report in parallel
-      const [profile, skillDoc, latestReport] = await Promise.all([
-        Profile.findOne({ user: userId }),
+      // Fetch User, Skills, and Latest Report in parallel
+      const [user, skillDoc, latestReport] = await Promise.all([
+        User.findById(userId),
         SkillService.getUserSkills(userId),
         ReportService.getLatestReport(userId)
       ]);
 
+      const profile = user ? {
+        name: user.name,
+        targetRole: user.jobTitle
+      } : null;
+
       res.status(200).json({
         success: true,
         data: {
-          profile: profile || null,
+          profile: profile,
           skills: skillDoc.skills || [],
           latestReport: latestReport || null
         },
