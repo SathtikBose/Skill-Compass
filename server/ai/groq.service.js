@@ -5,7 +5,7 @@ class GroqService {
     this.groq = new Groq({
       apiKey: process.env.GROQ_API_KEY || 'dummy_key',
     });
-    this.model = 'llama3-8b-8192'; // Using Llama 3 8B for fast inference
+    this.model = 'llama-3.1-8b-instant'; // Updated to active model
   }
 
   /**
