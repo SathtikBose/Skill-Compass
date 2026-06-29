@@ -73,6 +73,33 @@ class AuthController {
       next(error);
     }
   }
+
+  /**
+   * Google Login
+   * @route POST /api/v1/auth/google
+   */
+  static async googleLogin(req, res, next) {
+    try {
+      const { token } = req.body;
+      
+      if (!token) {
+        return res.status(400).json({
+          success: false,
+          message: 'Please provide a valid Google token',
+        });
+      }
+
+      const { user, token: appToken } = await AuthService.googleLogin(token);
+
+      res.status(200).json({
+        success: true,
+        message: 'Logged in with Google successfully',
+        data: { user, token: appToken },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = AuthController;

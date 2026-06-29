@@ -84,7 +84,47 @@ class AuthService {
     return user;
   }
   
-  // Future Google OAuth support can be added here
+  /**
+   * Authenticate or register a user via Google OAuth
+   */
+  static async googleLogin(token) {
+    const { OAuth2Client } = require('google-auth-library');
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    
+    // Using an access token, fetch user info from google endpoints
+    const axios = require('axios');
+    const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    
+    const { email, name, picture } = response.data;
+    
+    if (!email) {
+      const error = new Error('Google authentication failed to return an email');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    // Find or create user
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = new User({
+        name,
+        email,
+        avatar: picture,
+        provider: 'google',
+        // Set a random password for google users to satisfy DB constraints if required
+        password: Math.random().toString(36).slice(-8) + 'Aa1!'
+      });
+      await user.save();
+    } else {
+      user.lastLogin = Date.now();
+      await user.save();
+    }
+
+    const appToken = this.generateToken(user._id);
+    return { user, token: appToken };
+  }
 }
 
 module.exports = AuthService;

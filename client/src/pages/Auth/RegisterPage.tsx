@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 import { User, Lock, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const RegisterPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -35,6 +36,25 @@ const RegisterPage: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        setIsLoading(true);
+        setError('');
+        const res = await api.post('/auth/google', { token: tokenResponse.access_token });
+        login(res.data.data.token, res.data.data.user);
+        navigate('/dashboard');
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'Google sign up failed.');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    onError: () => {
+      setError('Google Sign Up failed');
+    }
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#020617] relative overflow-hidden font-body text-slate-50 p-4">
@@ -133,6 +153,18 @@ const RegisterPage: React.FC = () => {
           >
             {isLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Sign Up'}
           </button>
+          <div className="relative flex items-center py-4">
+            <div className="flex-grow border-t border-white/10"></div>
+            <span className="flex-shrink mx-4 text-xs uppercase tracking-widest text-slate-400 font-bold">OR</span>
+            <div className="flex-grow border-t border-white/10"></div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <button onClick={() => googleLogin()} type="button" className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-sm font-medium">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJmXzky8kZvnONzQJiRkgxabr-ZS8P1ZHXKbV87j33u4fdRmgTJ5fRfLa0YAEfiQW0cI6dLMc0jN-jgO2VZlF1H2qT2E9hpL9Q6ocdWqApdeRCQ-A0rY4HPbYrLgGMCQRIDqTRVcWKQcL0uuWG7pN1h3_InH0--CNxNVZPlXRxxHC5lijl5fWE8msNYKMm7PZUNBGpxlox8UeRRTPavh8TcwDZ2daPyErBcBdrh4B4svgpG7B3fbDiBNk_Y3UtcbAVd7P9HCx4yECN" alt="Google" className="w-5 h-5" />
+              Sign up with Google
+            </button>
+          </div>
         </form>
 
         <div className="mt-10 text-center">
