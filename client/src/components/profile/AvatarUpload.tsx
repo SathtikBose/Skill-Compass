@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Camera, Loader2, Upload } from 'lucide-react';
-import api from '../../../services/api';
-import { useAuth } from '../../../context/AuthContext';
+import api from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 
 interface AvatarUploadProps {
   currentAvatar: string | undefined;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { Loader2, Calendar, TrendingUp, TrendingDown, Activity, AlertTriangle, Compass } from 'lucide-react';
+import { Loader2, Calendar, Activity, AlertTriangle, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const HistoryPage: React.FC = () => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SkillManager, { Skill } from '../../components/skills/SkillManager';
+import SkillManager from '../../components/skills/SkillManager';
+import type { Skill } from '../../components/skills/SkillManager';
 import api from '../../services/api';
 import { Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';

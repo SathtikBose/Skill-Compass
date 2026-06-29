@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Edit2, Check, X, Loader2 } from 'lucide-react';
-import api from '../../../services/api';
+import api from '../../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface Skill {

@@ -56,7 +56,7 @@ const DashboardPage: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
-              Welcome back{profile?.name ? `, \${profile.name}` : ''}
+              Welcome back{profile?.name ? `, ${profile.name}` : ''}
             </h1>
             <p className="text-neutral-400 mt-1 flex items-center">
               <Target className="w-4 h-4 mr-2" />
@@ -78,7 +78,7 @@ const DashboardPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
             title="Skill Compass Score"
-            value={latestReport?.score !== undefined ? \`\${latestReport.score}/100\` : 'N/A'}
+            value={latestReport?.score !== undefined ? `${latestReport.score}/100` : 'N/A'}
             subtitle="Market Readiness"
             icon={Compass}
             colorClass="bg-indigo-500 text-indigo-400"
@@ -86,7 +86,7 @@ const DashboardPage: React.FC = () => {
           />
           <StatCard
             title="Decay Score"
-            value={latestReport?.decayScore !== undefined ? \`\${latestReport.decayScore}%\` : 'N/A'}
+            value={latestReport?.decayScore !== undefined ? `${latestReport.decayScore}%` : 'N/A'}
             subtitle="Outdated tech"
             icon={Activity}
             colorClass="bg-red-500 text-red-400"
@@ -94,7 +94,7 @@ const DashboardPage: React.FC = () => {
           />
           <StatCard
             title="Drift Score"
-            value={latestReport?.driftScore !== undefined ? \`\${latestReport.driftScore}%\` : 'N/A'}
+            value={latestReport?.driftScore !== undefined ? `${latestReport.driftScore}%` : 'N/A'}
             subtitle="Focus deviation"
             icon={AlertTriangle}
             colorClass="bg-amber-500 text-amber-400"

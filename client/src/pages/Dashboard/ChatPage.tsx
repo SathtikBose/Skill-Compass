@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../../services/api';
-import { Loader2, Send, Bot, User } from 'lucide-react';
+import { Loader2, Send, Bot } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ChatPage: React.FC = () => {

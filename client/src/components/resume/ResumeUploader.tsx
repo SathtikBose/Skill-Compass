@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { UploadCloud, FileText, X, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../../services/api';
+import api from '../../services/api';
 
 interface ResumeUploaderProps {
   onUploadSuccess: () => void;
