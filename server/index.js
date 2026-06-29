@@ -40,6 +40,15 @@ app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/chat', chatRoutes);
 
+// Root level health check for Render/Vercel
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+app.get('/', (req, res) => {
+  res.status(200).send('Skill Compass API is running');
+});
+
 app.get('/api/v1/health', (req, res) => {
   res.status(200).json({
     status: 'OK',

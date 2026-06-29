@@ -5,7 +5,7 @@ class GeminiService {
   constructor() {
     // Initialize the SDK. Requires GEMINI_API_KEY in .env
     this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'dummy_key_if_not_set');
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    this.model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
   }
 
   /**
