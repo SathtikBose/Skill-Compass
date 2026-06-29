@@ -1,4 +1,5 @@
 const Chat = require('../models/Chat');
+const Skill = require('../models/Skill');
 const groqService = require('../ai/groq.service');
 
 class ChatService {
@@ -23,7 +24,15 @@ class ChatService {
       { role: 'assistant', content: chat.response }
     ]);
 
-    const aiResponse = await groqService.generateChatResponse(prompt, formattedHistory);
+    // Fetch user skills to provide context
+    const userSkillsDoc = await Skill.findOne({ user: userId }).lean();
+    let context = '';
+    if (userSkillsDoc && userSkillsDoc.skills && userSkillsDoc.skills.length > 0) {
+      const skillsStr = userSkillsDoc.skills.map(s => `${s.name} (${s.proficiency})`).join(', ');
+      context = `The user has the following skills: ${skillsStr}.`;
+    }
+
+    const aiResponse = await groqService.generateChatResponse(prompt, formattedHistory, context);
 
     const newChat = new Chat({
       user: userId,

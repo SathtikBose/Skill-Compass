@@ -12,8 +12,9 @@ class GroqService {
    * Generates a response from the AI Career Assistant
    * @param {string} prompt 
    * @param {Array} history context of previous messages
+   * @param {string} context additional user context (e.g. skills)
    */
-  async generateChatResponse(prompt, history = []) {
+  async generateChatResponse(prompt, history = [], context = '') {
     if (!process.env.GROQ_API_KEY) {
       console.warn('GROQ_API_KEY is not set. Returning mock chat data.');
       return "I am a mock AI assistant. Please configure the GROQ_API_KEY to enable real AI responses. You asked: " + prompt;
@@ -23,7 +24,7 @@ class GroqService {
       const messages = [
         {
           role: 'system',
-          content: 'You are an expert Technical Career Coach for Skill Compass. You help developers and tech professionals upskill, prepare for interviews, and understand market trends. Keep your answers concise, actionable, and formatted nicely.'
+          content: 'You are an expert Technical Career Coach for Skill Compass. You help developers and tech professionals upskill, prepare for interviews, and understand market trends. Keep your answers concise, actionable, and formatted nicely.\n' + (context ? `\nContext about the user: ${context}` : '')
         },
         ...history,
         {

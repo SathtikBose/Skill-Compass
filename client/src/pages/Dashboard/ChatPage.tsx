@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import api from '../../services/api';
 import { Loader2, Send, Bot } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<any[]>([]);
@@ -106,8 +107,8 @@ const ChatPage: React.FC = () => {
                     </div>
                     <div className="bg-black/40 backdrop-blur-md border border-white/10 text-gray-200 rounded-2xl rounded-bl-sm px-5 py-3 shadow-lg">
                       {msg.response ? (
-                        <div className="text-sm whitespace-pre-wrap leading-relaxed prose prose-invert max-w-none">
-                          {msg.response}
+                        <div className="text-sm leading-relaxed prose prose-invert max-w-none">
+                          <ReactMarkdown>{msg.response}</ReactMarkdown>
                         </div>
                       ) : (
                         <div className="flex space-x-1.5 h-5 items-center">
