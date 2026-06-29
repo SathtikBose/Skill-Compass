@@ -10,8 +10,14 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user, loading } = useAuth();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!loading && user) {
+      navigate('/dashboard');
+    }
+  }, [user, loading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,14 +121,10 @@ const LoginPage: React.FC = () => {
             <div className="flex-grow border-t border-white/10"></div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <button type="button" className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-sm font-medium">
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJmXzky8kZvnONzQJiRkgxabr-ZS8P1ZHXKbV87j33u4fdRmgTJ5fRfLa0YAEfiQW0cI6dLMc0jN-jgO2VZlF1H2qT2E9hpL9Q6ocdWqApdeRCQ-A0rY4HPbYrLgGMCQRIDqTRVcWKQcL0uuWG7pN1h3_InH0--CNxNVZPlXRxxHC5lijl5fWE8msNYKMm7PZUNBGpxlox8UeRRTPavh8TcwDZ2daPyErBcBdrh4B4svgpG7B3fbDiBNk_Y3UtcbAVd7P9HCx4yECN" alt="Google" className="w-5 h-5" />
-              Google
-            </button>
-            <button type="button" className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-sm font-medium">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsD8ewDqXkngbTkiQ8qH92ibvWXXB3hBXWIOMqiAUK0Hrv_g2lYPMimXIzgj0o_I8udpyzU3CRbt1Pq95InZ8eYb-mHn1hmxIAoCHrzhcuwJcDSnOq9aZ-4BqKNP5X97_WljdtKsVIcbEH7fAXBqmSjytZtyuInn6S-uRcMh2oVg0nN2bkuz0ej1Bsk3nln_L7QaLHyP4vACWXJ_j_2T_GwFOEy040b3aw3QrRLhGOfUgo9-fylBdFeIzXWnwbwgrzgKyZtxYqno0m" alt="Apple" className="w-5 h-5" />
-              Apple
+              Sign in with Google
             </button>
           </div>
         </form>
