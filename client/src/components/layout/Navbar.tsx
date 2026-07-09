@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Compass, FileText, Code2, Activity, MessageSquare, LogOut, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -50,6 +51,7 @@ const Navbar: React.FC = () => {
         <div className="hidden md:block text-sm text-gray-400 mr-2">
           {user?.name}
         </div>
+        <ThemeToggle />
         <button
           onClick={handleLogout}
           className="flex items-center px-4 py-2 text-sm font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-xl transition-all border border-red-500/20"

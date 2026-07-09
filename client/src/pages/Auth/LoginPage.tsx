@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { Lock, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useGoogleLogin } from '@react-oauth/google';
+import ThemeToggle from '../../components/layout/ThemeToggle';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -56,8 +57,11 @@ const LoginPage: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#020617] relative overflow-hidden font-body text-slate-50">
+    <div className="min-h-screen flex items-center justify-center app-surface relative overflow-hidden font-body">
       <div className="gradient-bg"></div>
+      <div className="absolute right-5 top-5 z-20">
+        <ThemeToggle />
+      </div>
       
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
