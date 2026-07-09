@@ -91,6 +91,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-gradient {
   background: linear-gradient(135deg, #818cf8 0%, #a855f7 100%);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #ffffff !important;
 }
 
 .btn-gradient:hover {
@@ -167,6 +168,7 @@ h1, h2, h3, h4, h5, h6 {
 :root[data-theme='light'] .text-white,
 :root[data-theme='light'] .text-gray-200,
 :root[data-theme='light'] .text-gray-300,
+:root[data-theme='light'] .text-neutral-300,
 :root[data-theme='light'] .text-slate-50 {
   color: var(--text-h) !important;
 }
@@ -186,9 +188,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 :root[data-theme='light'] .bg-\[\#0f172a\]\/40,
+:root[data-theme='light'] .bg-black\/20,
 :root[data-theme='light'] .bg-black\/40,
 :root[data-theme='light'] .bg-black\/50,
 :root[data-theme='light'] .bg-black\/60,
+:root[data-theme='light'] .bg-neutral-900\/50,
 :root[data-theme='light'] .bg-neutral-950\/50 {
   background-color: var(--field) !important;
 }
@@ -200,6 +204,7 @@ h1, h2, h3, h4, h5, h6 {
 
 :root[data-theme='light'] .border-white\/5,
 :root[data-theme='light'] .border-white\/10,
+:root[data-theme='light'] .border-gray-700,
 :root[data-theme='light'] .border-neutral-700,
 :root[data-theme='light'] .border-neutral-800 {
   border-color: var(--border) !important;
