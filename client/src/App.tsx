@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
@@ -17,30 +19,32 @@ const App: React.FC = () => {
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            
-            {/* Protected Routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/resumes" element={<ResumePage />} />
-              <Route path="/skills" element={<SkillsPage />} />
-              <Route path="/history" element={<HistoryPage />} />
-              <Route path="/chat" element={<ChatPage />} />
-              {/* Add more protected routes here later */}
-            </Route>
-            
-            {/* Catch all */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/resumes" element={<ResumePage />} />
+                <Route path="/skills" element={<SkillsPage />} />
+                <Route path="/history" element={<HistoryPage />} />
+                <Route path="/chat" element={<ChatPage />} />
+                {/* Add more protected routes here later */}
+              </Route>
+
+              {/* Catch all */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
     </GoogleOAuthProvider>
   );
 };

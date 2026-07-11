@@ -6,6 +6,26 @@
   --bg: #09090b; /* Even darker bg for true premium dark mode */
   --border: #27272a;
   --accent: #818cf8;
+  --card: rgba(15, 23, 42, 0.6);
+  --card-border: rgba(129, 140, 248, 0.2);
+  --muted: #9ca3af;
+  --field: rgba(15, 23, 42, 0.4);
+  --soft-surface: rgba(255, 255, 255, 0.05);
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --text: #475569;
+  --text-h: #111827;
+  --bg: #f8fafc;
+  --border: #dbe3ef;
+  --accent: #4f46e5;
+  --card: rgba(255, 255, 255, 0.78);
+  --card-border: rgba(79, 70, 229, 0.18);
+  --muted: #64748b;
+  --field: rgba(255, 255, 255, 0.72);
+  --soft-surface: rgba(15, 23, 42, 0.05);
+  color-scheme: light;
 }
 
 body {
@@ -71,6 +91,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-gradient {
   background: linear-gradient(135deg, #818cf8 0%, #a855f7 100%);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #ffffff !important;
 }
 
 .btn-gradient:hover {
@@ -80,4 +101,117 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-gradient:active {
   transform: scale(0.98);
+}
+
+.app-surface,
+.landing-page {
+  background: var(--bg);
+  color: var(--text);
+}
+
+:root[data-theme='light'] .gradient-bg {
+  background: radial-gradient(circle at 18% 20%, rgba(99, 102, 241, 0.18) 0%, transparent 36%),
+              radial-gradient(circle at 86% 62%, rgba(168, 85, 247, 0.13) 0%, transparent 36%),
+              linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(238, 242, 255, 0.74));
+}
+
+.glass-card {
+  background: var(--card);
+  border-color: var(--card-border);
+}
+
+:root[data-theme='light'] .glass-card {
+  box-shadow: 0 24px 60px -28px rgba(79, 70, 229, 0.32);
+}
+
+.theme-toggle {
+  background: var(--soft-surface);
+  border-color: var(--card-border);
+  color: var(--text-h);
+}
+
+.theme-toggle:hover {
+  border-color: rgba(129, 140, 248, 0.55);
+  color: var(--accent);
+  box-shadow: 0 0 18px rgba(129, 140, 248, 0.18);
+}
+
+.secondary-action,
+.proof-pill,
+.eyebrow {
+  background: var(--soft-surface);
+  border: 1px solid var(--card-border);
+  color: var(--text-h);
+}
+
+.hero-visual {
+  border-color: var(--card-border);
+  box-shadow: 0 30px 80px -32px rgba(79, 70, 229, 0.45);
+}
+
+.hero-visual-overlay {
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.12), rgba(2, 6, 23, 0.82));
+}
+
+.metric-card {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  backdrop-filter: blur(16px);
+}
+
+.feature-card p,
+.landing-page p {
+  color: var(--text);
+}
+
+:root[data-theme='light'] .text-white,
+:root[data-theme='light'] .text-gray-200,
+:root[data-theme='light'] .text-gray-300,
+:root[data-theme='light'] .text-neutral-300,
+:root[data-theme='light'] .text-slate-50 {
+  color: var(--text-h) !important;
+}
+
+:root[data-theme='light'] .text-gray-400,
+:root[data-theme='light'] .text-gray-500,
+:root[data-theme='light'] .text-gray-600,
+:root[data-theme='light'] .text-slate-400,
+:root[data-theme='light'] .text-neutral-400 {
+  color: var(--muted) !important;
+}
+
+:root[data-theme='light'] .bg-\[\#020617\],
+:root[data-theme='light'] .bg-neutral-950,
+:root[data-theme='light'] .bg-neutral-900 {
+  background-color: var(--bg) !important;
+}
+
+:root[data-theme='light'] .bg-\[\#0f172a\]\/40,
+:root[data-theme='light'] .bg-black\/20,
+:root[data-theme='light'] .bg-black\/40,
+:root[data-theme='light'] .bg-black\/50,
+:root[data-theme='light'] .bg-black\/60,
+:root[data-theme='light'] .bg-neutral-900\/50,
+:root[data-theme='light'] .bg-neutral-950\/50 {
+  background-color: var(--field) !important;
+}
+
+:root[data-theme='light'] .bg-white\/5,
+:root[data-theme='light'] .bg-white\/10 {
+  background-color: rgba(15, 23, 42, 0.05) !important;
+}
+
+:root[data-theme='light'] .border-white\/5,
+:root[data-theme='light'] .border-white\/10,
+:root[data-theme='light'] .border-gray-700,
+:root[data-theme='light'] .border-neutral-700,
+:root[data-theme='light'] .border-neutral-800 {
+  border-color: var(--border) !important;
+}
+
+:root[data-theme='light'] input,
+:root[data-theme='light'] textarea,
+:root[data-theme='light'] select {
+  color: var(--text-h) !important;
 }
