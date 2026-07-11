@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="fixed top-0 w-full z-50 glass-card border-b border-white/10 px-6 py-4 flex justify-between items-center backdrop-blur-md">
       <div className="flex items-center space-x-8">
-        <Link to="/dashboard" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 flex items-center">
+        <Link to="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 flex items-center">
           <Compass className="w-6 h-6 mr-2 text-indigo-400" />
           Skill Compass
         </Link>
@@ -35,11 +35,10 @@ const Navbar: React.FC = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                location.pathname === item.path
+              className={`flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all ${location.pathname === item.path
                   ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-[0_0_10px_rgba(99,102,241,0.2)]'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               {item.icon}
               {item.name}
